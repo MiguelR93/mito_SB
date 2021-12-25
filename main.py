@@ -2,6 +2,7 @@ import pygame, sys
 from pygame.locals import *
 from fields import *
 from drawing import *
+from players import *
 
 pygame.init()
 #15*12
@@ -11,18 +12,46 @@ pygame.display.set_caption('Mito Super Bomberman!')
 clock = pygame.time.Clock()
 gameLoop = True
 place = Field()
+player = Player()
+n = 0
 while gameLoop:
+    print(f'\n\n\n\nEl valor de n: {n}\n\n\n\n')
+    n += 1
     for event in pygame.event.get():
         if event.type == QUIT:
             pygame.quit()
             sys.exit()
-        
-        drawing(DISPLAYSURF, place)
-        # DISPLAYSURF.fill((225,255,255))
-        # pygame.draw.rect(DISPLAYSURF, (0,255,0), place.ground)
-        # for i in place.all_bricks_x:
-        #     for e in place.all_bricks_y:
-        #         pygame.draw.rect(DISPLAYSURF, (255,0,0), (i, e, 64, 64))
-        #         print(i,e)
-        pygame.display.update()
-        clock.tick(60)
+    # player.action()
+    print(f"Posición de jugador: {player.position}")
+    if event.type == pygame.KEYDOWN:
+        print('\n\n\n\n\n\n\n\n\n\n\n\nSe presionó una tecla\n\n\n\n')
+        if event.key == pygame.K_LEFT:
+            # player.position[0] -= 64
+            if player.currently_sprite != player.left:
+                player.currently_sprite = player.left
+            elif player.position[0] == 64:
+                pass
+            else: #aquí debería acceder a una animación
+                player.position[0] -= 64
+                # return player.position
+                # print(f"\n\n\n\nPosición: {player.position}")
+        elif event.key == pygame.K_RIGHT:
+            if player.currently_sprite != player.right:
+                player.currently_sprite = player.right
+                print("\n\n\nEran diferentes")
+            # player.position[0] += 64
+            elif player.position[0] == 64*13:
+                pass
+            else: #aquí debería acceder a una animación
+                player.position[0] += 64
+                # return player.position
+                # print(f"\n\n\n\nPosición: {player.position}")
+    drawing(DISPLAYSURF, place, player)
+    # DISPLAYSURF.fill((225,255,255))
+    # pygame.draw.rect(DISPLAYSURF, (0,255,0), place.ground)
+    # for i in place.all_bricks_x:
+    #     for e in place.all_bricks_y:
+    #         pygame.draw.rect(DISPLAYSURF, (255,0,0), (i, e, 64, 64))
+    #         print(i,e)
+    pygame.display.update()
+    clock.tick(60)
