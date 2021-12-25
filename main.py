@@ -21,8 +21,6 @@ while gameLoop:
         if event.type == QUIT:
             pygame.quit()
             sys.exit()
-    # player.action()
-    print(f"Posición de jugador: {player.position}")
     if event.type == pygame.KEYDOWN:
         print('\n\n\n\n\n\n\n\n\n\n\n\nSe presionó una tecla\n\n\n\n')
         if event.key == pygame.K_LEFT:
@@ -33,9 +31,7 @@ while gameLoop:
                 pass
             else: #aquí debería acceder a una animación
                 player.position[0] -= 64
-                # return player.position
-                # print(f"\n\n\n\nPosición: {player.position}")
-        elif event.key == pygame.K_RIGHT:
+        if event.key == pygame.K_RIGHT:
             if player.currently_sprite != player.right:
                 player.currently_sprite = player.right
                 print("\n\n\nEran diferentes")
@@ -44,8 +40,24 @@ while gameLoop:
                 pass
             else: #aquí debería acceder a una animación
                 player.position[0] += 64
-                # return player.position
-                # print(f"\n\n\n\nPosición: {player.position}")
+        if event.key == pygame.K_DOWN:
+            # player.position[0] -= 64
+            if player.currently_sprite != player.front:
+                player.currently_sprite = player.front
+            elif player.position[1] == 64*10+32:
+                pass
+            else: #aquí debería acceder a una animación
+                player.position[1] += 64
+        if event.key == pygame.K_UP:
+            if player.currently_sprite != player.back:
+                player.currently_sprite = player.back
+                print("\n\n\nEran diferentes")
+            # player.position[0] += 64
+            elif player.position[1] == 32:
+                pass
+            else: #aquí debería acceder a una animación
+                player.position[1] -= 64
+    # player.action()
     drawing(DISPLAYSURF, place, player)
     # DISPLAYSURF.fill((225,255,255))
     # pygame.draw.rect(DISPLAYSURF, (0,255,0), place.ground)
@@ -54,4 +66,4 @@ while gameLoop:
     #         pygame.draw.rect(DISPLAYSURF, (255,0,0), (i, e, 64, 64))
     #         print(i,e)
     pygame.display.update()
-    clock.tick(60)
+    clock.tick(3)
