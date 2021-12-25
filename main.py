@@ -1,6 +1,7 @@
 import pygame, sys
-from fields import *
 from pygame.locals import *
+from fields import *
+from drawing import *
 
 pygame.init()
 #15*12
@@ -15,12 +16,13 @@ while gameLoop:
         if event.type == QUIT:
             pygame.quit()
             sys.exit()
-
-        DISPLAYSURF.fill((225,255,255))
-        pygame.draw.rect(DISPLAYSURF, (0,255,0), place.ground)
-        for i in place.all_bricks_x:
-            for e in place.all_bricks_y:
-                pygame.draw.rect(DISPLAYSURF, (255,0,0), (i, e, 64, 64))
-                print(i,e)
+        
+        drawing(DISPLAYSURF, place)
+        # DISPLAYSURF.fill((225,255,255))
+        # pygame.draw.rect(DISPLAYSURF, (0,255,0), place.ground)
+        # for i in place.all_bricks_x:
+        #     for e in place.all_bricks_y:
+        #         pygame.draw.rect(DISPLAYSURF, (255,0,0), (i, e, 64, 64))
+        #         print(i,e)
         pygame.display.update()
         clock.tick(60)

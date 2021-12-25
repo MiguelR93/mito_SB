@@ -1,2 +1,3 @@
 class Player():
-    def
+    def __init__(self):
+        currently_sprite = None
