@@ -22,44 +22,11 @@ while gameLoop:
         if event.type == QUIT:
             pygame.quit()
             sys.exit()
-    if event.type == pygame.KEYDOWN:
-        print('\n\n\n\n\n\n\n\n\n\n\n\nSe presionó una tecla\n\n\n\n')
-        player.action(event)
-        # if event.key == pygame.K_LEFT:
-        #     # player.position[0] -= 64
-        #     if player.currently_sprite != player.left:
-        #         player.currently_sprite = player.left
-        #     elif player.position[0] == 64:
-        #         pass
-        #     else: #aquí debería acceder a una animación
-        #         player.position[0] -= 64
-        # if event.key == pygame.K_RIGHT:
-        #     if player.currently_sprite != player.right:
-        #         player.currently_sprite = player.right
-        #         print("\n\n\nEran diferentes")
-        #     # player.position[0] += 64
-        #     elif player.position[0] == 64*13:
-        #         pass
-        #     else: #aquí debería acceder a una animación
-        #         player.position[0] += 64
-        # if event.key == pygame.K_DOWN:
-        #     # player.position[0] -= 64
-        #     if player.currently_sprite != player.front:
-        #         player.currently_sprite = player.front
-        #     elif player.position[1] == 64*10+32:
-        #         pass
-        #     else: #aquí debería acceder a una animación
-        #         player.position[1] += 64
-        # if event.key == pygame.K_UP:
-        #     if player.currently_sprite != player.back:
-        #         player.currently_sprite = player.back
-        #         print("\n\n\nEran diferentes")
-        #     # player.position[0] += 64
-        #     elif player.position[1] == 32:
-        #         pass
-        #     else: #aquí debería acceder a una animación
-        #         player.position[1] -= 64
-    # player.action()
+    # if event.type == pygame.KEYDOWN:
+    #     print('\n\n\n\n\n\n\n\n\n\n\n\nSe presionó una tecla\n\n\n\n')
+    #     player.action(event)
+    player.action(event)
+
     drawing(DISPLAYSURF, place, player)
     pygame.display.update()
     clock.tick(FPS)

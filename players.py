@@ -38,20 +38,51 @@ class Player():
         self.currently_sprite = self.front
         # position:
         self.position = [64, 32]
-        self.movementFrames = 0
+        self.movement_frames = 0
+        self.movement_direction = None
     
     def action(self, event):
-        self.movement(event)
+        if self.movement_frames == 0:
+            if event.type == pygame.KEYDOWN:
+                self.movement(event)
+        else:
+            self.movement_animation()
     
+    def movement_animation(self):
+        self.movement_frames += 1
+        if self.movement_frames == 30:
+            if self.movement_direction == 'right':
+                self.position[0] += 32
+            elif self.movement_direction == 'left':
+                self.position[0] -= 32
+
+            if self.movement_direction == 'down':
+                self.position[1] += 32
+            elif self.movement_direction == 'up':
+                self.position[1] -= 32
+        elif self.movement_frames == 60:
+            if self.movement_direction == 'right':
+                self.position[0] += 32
+            elif self.movement_direction == 'left':
+                self.position[0] -= 32
+
+            if self.movement_direction == 'down':
+                self.position[1] += 32
+            elif self.movement_direction == 'up':
+                self.position[1] -= 32
+            self.movement_frames = 0
+            self.movement_direction = None
+
     def movement(self, event):
-        self.movementFrames += 1
         if event.key == pygame.K_LEFT:
             if self.currently_sprite != self.left:
                 self.currently_sprite = self.left
             elif self.position[0] == 64:
                 pass
             else: #aquí debería acceder a una animación
-                self.position[0] -= 64
+                # self.position[0] -= 64
+                self.movement_direction = 'left'
+                self.movement_animation()
         if (event.key == pygame.K_RIGHT):
             if self.currently_sprite != self.right:
                 self.currently_sprite = self.right
@@ -60,7 +91,9 @@ class Player():
             elif self.position[0] == 64*13:
                 pass
             else: #aquí debería acceder a una animación
-                self.position[0] += 64
+                # self.position[0] += 64
+                self.movement_direction = 'right'
+                self.movement_animation()
         if event.key == pygame.K_DOWN:
             # self.position[0] -= 64
             if self.currently_sprite != self.front:
@@ -68,7 +101,9 @@ class Player():
             elif self.position[1] == 64*10+32:
                 pass
             else: #aquí debería acceder a una animación
-                self.position[1] += 64
+                # self.position[1] += 64
+                self.movement_direction = 'down'
+                self.movement_animation()
         if event.key == pygame.K_UP:
             if self.currently_sprite != self.back:
                 self.currently_sprite = self.back
@@ -77,4 +112,6 @@ class Player():
             elif self.position[1] == 32:
                 pass
             else: #aquí debería acceder a una animación
-                self.position[1] -= 64
+                # self.position[1] -= 64
+                self.movement_direction = 'up'
+                self.movement_animation()
