@@ -3,6 +3,7 @@ from pygame.locals import *
 from fields import *
 from drawing import *
 from players import *
+from constants import *
 
 pygame.init()
 #15*12
@@ -23,47 +24,42 @@ while gameLoop:
             sys.exit()
     if event.type == pygame.KEYDOWN:
         print('\n\n\n\n\n\n\n\n\n\n\n\nSe presionó una tecla\n\n\n\n')
-        if event.key == pygame.K_LEFT:
-            # player.position[0] -= 64
-            if player.currently_sprite != player.left:
-                player.currently_sprite = player.left
-            elif player.position[0] == 64:
-                pass
-            else: #aquí debería acceder a una animación
-                player.position[0] -= 64
-        if event.key == pygame.K_RIGHT:
-            if player.currently_sprite != player.right:
-                player.currently_sprite = player.right
-                print("\n\n\nEran diferentes")
-            # player.position[0] += 64
-            elif player.position[0] == 64*13:
-                pass
-            else: #aquí debería acceder a una animación
-                player.position[0] += 64
-        if event.key == pygame.K_DOWN:
-            # player.position[0] -= 64
-            if player.currently_sprite != player.front:
-                player.currently_sprite = player.front
-            elif player.position[1] == 64*10+32:
-                pass
-            else: #aquí debería acceder a una animación
-                player.position[1] += 64
-        if event.key == pygame.K_UP:
-            if player.currently_sprite != player.back:
-                player.currently_sprite = player.back
-                print("\n\n\nEran diferentes")
-            # player.position[0] += 64
-            elif player.position[1] == 32:
-                pass
-            else: #aquí debería acceder a una animación
-                player.position[1] -= 64
+        player.action(event)
+        # if event.key == pygame.K_LEFT:
+        #     # player.position[0] -= 64
+        #     if player.currently_sprite != player.left:
+        #         player.currently_sprite = player.left
+        #     elif player.position[0] == 64:
+        #         pass
+        #     else: #aquí debería acceder a una animación
+        #         player.position[0] -= 64
+        # if event.key == pygame.K_RIGHT:
+        #     if player.currently_sprite != player.right:
+        #         player.currently_sprite = player.right
+        #         print("\n\n\nEran diferentes")
+        #     # player.position[0] += 64
+        #     elif player.position[0] == 64*13:
+        #         pass
+        #     else: #aquí debería acceder a una animación
+        #         player.position[0] += 64
+        # if event.key == pygame.K_DOWN:
+        #     # player.position[0] -= 64
+        #     if player.currently_sprite != player.front:
+        #         player.currently_sprite = player.front
+        #     elif player.position[1] == 64*10+32:
+        #         pass
+        #     else: #aquí debería acceder a una animación
+        #         player.position[1] += 64
+        # if event.key == pygame.K_UP:
+        #     if player.currently_sprite != player.back:
+        #         player.currently_sprite = player.back
+        #         print("\n\n\nEran diferentes")
+        #     # player.position[0] += 64
+        #     elif player.position[1] == 32:
+        #         pass
+        #     else: #aquí debería acceder a una animación
+        #         player.position[1] -= 64
     # player.action()
     drawing(DISPLAYSURF, place, player)
-    # DISPLAYSURF.fill((225,255,255))
-    # pygame.draw.rect(DISPLAYSURF, (0,255,0), place.ground)
-    # for i in place.all_bricks_x:
-    #     for e in place.all_bricks_y:
-    #         pygame.draw.rect(DISPLAYSURF, (255,0,0), (i, e, 64, 64))
-    #         print(i,e)
     pygame.display.update()
-    clock.tick(3)
+    clock.tick(FPS)

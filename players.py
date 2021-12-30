@@ -38,29 +38,45 @@ class Player():
         self.currently_sprite = self.front
         # position:
         self.position = [64, 32]
+        self.movementFrames = 0
     
-    def action(self):
-        for event in pygame.event.get():
-            if event.type == pygame.KEYDOWN:
-                print('\n\n\n\n\n\n\n\n\n\n\n\nSe presionó una tecla\n\n\n\n')
-                if event.key == pygame.K_LEFT:
-                    # self.position[0] -= 64
-                    if self.currently_sprite != self.left:
-                        self.currently_sprite = self.left
-                    elif self.position[0] == 64:
-                        pass
-                    else: #aquí debería acceder a una animación
-                        self.position[0] -= 64
-                        # return self.position
-                        # print(f"\n\n\n\nPosición: {self.position}")
-                elif event.key == pygame.K_RIGHT:
-                    if self.currently_sprite != self.right:
-                        self.currently_sprite = self.right
-                        print("\n\n\nEran diferentes")
-                    # self.position[0] += 64
-                    elif self.position[0] == 64*13:
-                        pass
-                    else: #aquí debería acceder a una animación
-                        self.position[0] += 64
-                        # return self.position
-                        # print(f"\n\n\n\nPosición: {self.position}")
+    def action(self, event):
+        self.movementFrames += 1
+        if event.key == pygame.K_LEFT:
+            # self.position[0] -= 64
+            if self.currently_sprite != self.left:
+                self.currently_sprite = self.left
+            elif self.position[0] == 64:
+                pass
+            else: #aquí debería acceder a una animación
+                self.position[0] -= 64
+        if (event.key == pygame.K_RIGHT):
+            if self.currently_sprite != self.right:
+                self.currently_sprite = self.right
+                print("\n\n\nEran diferentes")
+            # self.position[0] += 64
+            elif self.position[0] == 64*13:
+                pass
+            else: #aquí debería acceder a una animación
+                self.position[0] += 64
+        if event.key == pygame.K_DOWN:
+            # self.position[0] -= 64
+            if self.currently_sprite != self.front:
+                self.currently_sprite = self.front
+            elif self.position[1] == 64*10+32:
+                pass
+            else: #aquí debería acceder a una animación
+                self.position[1] += 64
+        if event.key == pygame.K_UP:
+            if self.currently_sprite != self.back:
+                self.currently_sprite = self.back
+                print("\n\n\nEran diferentes")
+            # self.position[0] += 64
+            elif self.position[1] == 32:
+                pass
+            else: #aquí debería acceder a una animación
+                self.position[1] -= 64
+                    # print(f"\n\n\n\nPosición: {self.position}")
+    
+    def movement(self):
+        pass
