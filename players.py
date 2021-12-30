@@ -41,9 +41,11 @@ class Player():
         self.movementFrames = 0
     
     def action(self, event):
+        self.movement(event)
+    
+    def movement(self, event):
         self.movementFrames += 1
         if event.key == pygame.K_LEFT:
-            # self.position[0] -= 64
             if self.currently_sprite != self.left:
                 self.currently_sprite = self.left
             elif self.position[0] == 64:
@@ -76,7 +78,3 @@ class Player():
                 pass
             else: #aquí debería acceder a una animación
                 self.position[1] -= 64
-                    # print(f"\n\n\n\nPosición: {self.position}")
-    
-    def movement(self):
-        pass
