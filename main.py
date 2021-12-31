@@ -42,7 +42,7 @@ while gameLoop:
             else:
                 bombs.append([bomb, n])
 
-    player.action(event, place.wall)
+    player.action(event, (place.wall + place.brick))
 
     for i in bombs:
         if n - i[1] >= 5*FPS:
