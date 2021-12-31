@@ -15,6 +15,13 @@ gameLoop = True
 place = Field()
 player = Player()
 n = 0
+
+bricks = place.bricks()
+
+# for i in place.all_bricks_x:
+#     for e in place.all_bricks_y:
+#         bricks.append(pygame.draw.rect(DISPLAYSURF, (255,0,0), (i, e, 64, 64)))
+
 while gameLoop:
     print(f'\n\n\n\nEl valor de n: {n}\n\n\n\n')
     n += 1
@@ -25,8 +32,8 @@ while gameLoop:
     # if event.type == pygame.KEYDOWN:
     #     print('\n\n\n\n\n\n\n\n\n\n\n\nSe presionó una tecla\n\n\n\n')
     #     player.action(event)
-    player.action(event)
+    player.action(event, bricks)
 
-    drawing(DISPLAYSURF, place, player)
+    drawing(DISPLAYSURF, place, player, bricks)
     pygame.display.update()
     clock.tick(FPS)

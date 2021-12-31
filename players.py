@@ -40,17 +40,23 @@ class Player():
         self.position = [64, 32]
         self.movement_frames = 0
         self.movement_direction = None
+        self.rect = Rect(self.position[0], self.position[1], 64, 64)
+        self.speed = 10
     
-    def action(self, event):
+    def act_rect(self):
+        self.rect[0] = self.position[0]
+        self.rect[1] = self.position[1]
+    
+    def action(self, event, bricks):
         if self.movement_frames == 0:
             if event.type == pygame.KEYDOWN:
-                self.movement(event)
+                self.movement(event, bricks)
         else:
-            self.movement_animation()
+            self.movement_animation(bricks)
     
-    def movement_animation(self):
+    def movement_animation(self, bricks):
         self.movement_frames += 1
-        if self.movement_frames == 30:
+        if self.movement_frames == self.speed:
             if self.movement_direction == 'right':
                 self.position[0] += 32
             elif self.movement_direction == 'left':
@@ -60,7 +66,7 @@ class Player():
                 self.position[1] += 32
             elif self.movement_direction == 'up':
                 self.position[1] -= 32
-        elif self.movement_frames == 60:
+        elif self.movement_frames == self.speed*2:
             if self.movement_direction == 'right':
                 self.position[0] += 32
             elif self.movement_direction == 'left':
@@ -72,17 +78,43 @@ class Player():
                 self.position[1] -= 32
             self.movement_frames = 0
             self.movement_direction = None
+        self.act_rect()
+    
+    def collide(self, bricks, direction):
+        values = None # element, adition, subtraction
+        if direction == 'right':
+            values = (0, 1, -1)
+        elif direction == 'left':
+            values = (0, -1, 1)
+        elif direction == 'up':
+            values = (1, -1, 1)
+        elif direction == 'down':
+            values = (1, 1, -1)
+        self.position[values[0]] += 64*values[1]
+        self.act_rect()
+        # futuro:
+        for i in bricks:
+            if self.rect.colliderect(i):
+                # self.position[0] -= 64
+                self.position[values[0]] += 64*values[2]
+                self.act_rect()
+                return True
+        # self.position[0] -= 64
+        self.position[values[0]] += 64*values[2]
+        self.act_rect()
 
-    def movement(self, event):
+    def movement(self, event, bricks):
         if event.key == pygame.K_LEFT:
             if self.currently_sprite != self.left:
                 self.currently_sprite = self.left
             elif self.position[0] == 64:
                 pass
+            elif self.collide(bricks, 'left') == True:
+                pass
             else: #aquí debería acceder a una animación
                 # self.position[0] -= 64
                 self.movement_direction = 'left'
-                self.movement_animation()
+                self.movement_animation(bricks)
         if (event.key == pygame.K_RIGHT):
             if self.currently_sprite != self.right:
                 self.currently_sprite = self.right
@@ -90,20 +122,24 @@ class Player():
             # self.position[0] += 64
             elif self.position[0] == 64*13:
                 pass
+            elif self.collide(bricks, 'right') == True:
+                pass
             else: #aquí debería acceder a una animación
                 # self.position[0] += 64
                 self.movement_direction = 'right'
-                self.movement_animation()
+                self.movement_animation(bricks)
         if event.key == pygame.K_DOWN:
             # self.position[0] -= 64
             if self.currently_sprite != self.front:
                 self.currently_sprite = self.front
             elif self.position[1] == 64*10+32:
                 pass
+            elif self.collide(bricks, 'down') == True:
+                pass
             else: #aquí debería acceder a una animación
                 # self.position[1] += 64
                 self.movement_direction = 'down'
-                self.movement_animation()
+                self.movement_animation(bricks)
         if event.key == pygame.K_UP:
             if self.currently_sprite != self.back:
                 self.currently_sprite = self.back
@@ -111,7 +147,9 @@ class Player():
             # self.position[0] += 64
             elif self.position[1] == 32:
                 pass
+            elif self.collide(bricks, 'up') == True:
+                pass
             else: #aquí debería acceder a una animación
                 # self.position[1] -= 64
                 self.movement_direction = 'up'
-                self.movement_animation()
+                self.movement_animation(bricks)
