@@ -15,7 +15,7 @@ gameLoop = True
 place = Field()
 player = Player()
 n = 0
-
+bombs = []
 bricks = place.bricks()
 
 # for i in place.all_bricks_x:
@@ -32,8 +32,22 @@ while gameLoop:
     # if event.type == pygame.KEYDOWN:
     #     print('\n\n\n\n\n\n\n\n\n\n\n\nSe presionó una tecla\n\n\n\n')
     #     player.action(event)
+
+    if event.type == pygame.KEYDOWN:
+        print("una bombita")
+        if event.key == pygame.K_RETURN:
+            bomb = player.place_bomb()
+            if bomb == None:
+                pass
+            else:
+                bombs.append([bomb, n])
+
     player.action(event, bricks)
 
-    drawing(DISPLAYSURF, place, player, bricks)
+    for i in bombs:
+        if n - i[1] >= 5*FPS:
+            bombs.remove(i)
+
+    drawing(DISPLAYSURF, place, player, bricks, bombs)
     pygame.display.update()
     clock.tick(FPS)

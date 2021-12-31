@@ -44,8 +44,11 @@ class Player():
         self.speed = 10
     
     def place_bomb(self):
-        bomb = self.position
-        return bomb
+        if self.movement_frames == 0:
+            bomb = [int(self.position[0]+32), int(self.position[1]+32)]
+            return bomb
+        else:
+            return None
     
     def act_rect(self):
         self.rect[0] = self.position[0]
