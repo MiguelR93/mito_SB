@@ -16,11 +16,11 @@ place = Field()
 player = Player()
 n = 0
 bombs = []
-bricks = place.bricks()
+walls = place.walls()
 
-# for i in place.all_bricks_x:
-#     for e in place.all_bricks_y:
-#         bricks.append(pygame.draw.rect(DISPLAYSURF, (255,0,0), (i, e, 64, 64)))
+# for i in place.all_walls_x:
+#     for e in place.all_walls_y:
+#         walls.append(pygame.draw.rect(DISPLAYSURF, (255,0,0), (i, e, 64, 64)))
 
 while gameLoop:
     print(f'\n\n\n\nEl valor de n: {n}\n\n\n\n')
@@ -42,12 +42,12 @@ while gameLoop:
             else:
                 bombs.append([bomb, n])
 
-    player.action(event, bricks)
+    player.action(event, walls)
 
     for i in bombs:
         if n - i[1] >= 5*FPS:
             bombs.remove(i)
 
-    drawing(DISPLAYSURF, place, player, bricks, bombs)
+    drawing(DISPLAYSURF, place, player, walls, bombs)
     pygame.display.update()
     clock.tick(FPS)
