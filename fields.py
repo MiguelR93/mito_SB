@@ -9,6 +9,7 @@ class Field():
         # wall = (x, x) #walls' w,h
         self.all_walls_x = [2*i*64 for i in range(1,7)]
         self.all_walls_y = [32+(i*2-1)*64 for i in range(1,6)]
+        self.wall = self.walls()
     
     def walls(self):
         walls = []
@@ -17,3 +18,10 @@ class Field():
                 walls.append(Rect(i, e, 64, 64))
         
         return walls
+    
+    def bricks(self):
+        """
+        1. Create posible position (x and y)
+        2. Chose a specific number of them
+        3. Place bricks
+        """

@@ -16,7 +16,7 @@ place = Field()
 player = Player()
 n = 0
 bombs = []
-walls = place.walls()
+# walls = place.walls()
 
 # for i in place.all_walls_x:
 #     for e in place.all_walls_y:
@@ -42,12 +42,12 @@ while gameLoop:
             else:
                 bombs.append([bomb, n])
 
-    player.action(event, walls)
+    player.action(event, place.wall)
 
     for i in bombs:
         if n - i[1] >= 5*FPS:
             bombs.remove(i)
 
-    drawing(DISPLAYSURF, place, player, walls, bombs)
+    drawing(DISPLAYSURF, place, player, place, bombs)
     pygame.display.update()
     clock.tick(FPS)
