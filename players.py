@@ -43,6 +43,10 @@ class Player():
         self.rect = Rect(self.position[0], self.position[1], 64, 64)
         self.speed = 10
     
+    def place_bomb(self):
+        bomb = self.position
+        return bomb
+    
     def act_rect(self):
         self.rect[0] = self.position[0]
         self.rect[1] = self.position[1]
