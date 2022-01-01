@@ -42,6 +42,7 @@ class Player():
         self.movement_direction = None
         self.rect = Rect(self.position[0], self.position[1], 64, 64)
         self.speed = 10
+        self.bomb_power = 1
     
     def place_bomb(self):
         if self.movement_frames == 0:
@@ -49,6 +50,63 @@ class Player():
             return bomb
         else:
             return None
+    
+    def bomb_explode(self, bomb, frames, FPS):
+        """
+        1. Indicar la explosión
+        2. Realizar la explosión
+        3. Retirar la bomba"""
+        expansion = 64
+        if len(bomb) == 2:#1
+            bomb.append([
+                ((bomb[0][0]-32),(bomb[0][1]-32)-(self.bomb_power*expansion/2)),
+                ((bomb[0][0]+32),(bomb[0][1]-32)-(self.bomb_power*expansion/2)),
+                ((bomb[0][0]+32),(bomb[0][1]-32)),
+                ((bomb[0][0]+32)+(self.bomb_power*expansion/2),(bomb[0][1]-32)),
+                ((bomb[0][0]+32)+(self.bomb_power*expansion/2),(bomb[0][1]+32)),
+                ((bomb[0][0]+32),(bomb[0][1]+32)),
+                ((bomb[0][0]+32),(bomb[0][1]+32)+(self.bomb_power*expansion/2)),
+                ((bomb[0][0]-32),(bomb[0][1]+32)+(self.bomb_power*expansion/2)),
+                ((bomb[0][0]-32),(bomb[0][1]+32)),
+                ((bomb[0][0]-32)-(self.bomb_power*expansion/2),(bomb[0][1]+32)),
+                ((bomb[0][0]-32)-(self.bomb_power*expansion/2),(bomb[0][1]-32)),
+                ((bomb[0][0]-32),(bomb[0][1]-32))
+                ])#Debe ser una cruz cuya extensión sea la mitad del poder, la segunda vez será el poder completo
+        elif (len(bomb) == 3) and (frames - bomb[0][1] == 5*FPS + self.speed):#2
+            # self.bomb_explode_animation(bomb)
+            # bomb.append([bomb[0][0]-32,bomb[0][1]-32])
+            bomb[3] = [
+                ((bomb[0][0]-32),(bomb[0][1]-32)-(self.bomb_power*expansion)),
+                ((bomb[0][0]+32),(bomb[0][1]-32)-(self.bomb_power*expansion)),
+                ((bomb[0][0]+32),(bomb[0][1]-32)),
+                ((bomb[0][0]+32)+(self.bomb_power*expansion),(bomb[0][1]-32)),
+                ((bomb[0][0]+32)+(self.bomb_power*expansion),(bomb[0][1]+32)),
+                ((bomb[0][0]+32),(bomb[0][1]+32)),
+                ((bomb[0][0]+32),(bomb[0][1]+32)+(self.bomb_power*expansion)),
+                ((bomb[0][0]-32),(bomb[0][1]+32)+(self.bomb_power*expansion)),
+                ((bomb[0][0]-32),(bomb[0][1]+32)),
+                ((bomb[0][0]-32)-(self.bomb_power*expansion),(bomb[0][1]+32)),
+                ((bomb[0][0]-32)-(self.bomb_power*expansion),(bomb[0][1]-32)),
+                ((bomb[0][0]-32),(bomb[0][1]-32))
+                ]
+        elif (len(bomb) == 3) and (frames - bomb[0][1] == 5*FPS + self.speed*2):
+            bomb[3] = [
+            ((bomb[0][0]-32),(bomb[0][1]-32)-(self.bomb_power*expansion/2)),
+            ((bomb[0][0]+32),(bomb[0][1]-32)-(self.bomb_power*expansion/2)),
+            ((bomb[0][0]+32),(bomb[0][1]-32)),
+            ((bomb[0][0]+32)+(self.bomb_power*expansion/2),(bomb[0][1]-32)),
+            ((bomb[0][0]+32)+(self.bomb_power*expansion/2),(bomb[0][1]+32)),
+            ((bomb[0][0]+32),(bomb[0][1]+32)),
+            ((bomb[0][0]+32),(bomb[0][1]+32)+(self.bomb_power*expansion/2)),
+            ((bomb[0][0]-32),(bomb[0][1]+32)+(self.bomb_power*expansion/2)),
+            ((bomb[0][0]-32),(bomb[0][1]+32)),
+            ((bomb[0][0]-32)-(self.bomb_power*expansion/2),(bomb[0][1]+32)),
+            ((bomb[0][0]-32)-(self.bomb_power*expansion/2),(bomb[0][1]-32)),
+            ((bomb[0][0]-32),(bomb[0][1]-32))
+            ]
+    
+    # def bomb_explode_animation(self, bomb):
+    #     pass
     
     def act_rect(self):
         self.rect[0] = self.position[0]
