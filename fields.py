@@ -4,6 +4,7 @@ from constants import *
 import random
 
 x = 64
+qbrick = 20
 class Field():
     def __init__(self):
         self.ground = Rect((x,x/2), (x*13, x*11))
@@ -56,7 +57,7 @@ class Field():
         
         bricks = list(set(bricks))
         final_bricks = []
-        while len(final_bricks) < 20:
+        while len(final_bricks) < qbrick:
             final_bricks.append(random.choice(bricks))
             final_bricks = list(set(final_bricks))
         return final_bricks
