@@ -44,13 +44,21 @@ while gameLoop:
 
     player.action(event, (place.wall + place.brick))
 
+    # detect explotion with bricks:
     for i in bombs:
-        if (len(i) > 2) and (n - i[1] == 5*FPS + player.speed*3):
+        for b in place.brick:
+            if (len(i) == 3) and (Rect(b).colliderect(i[2][0])):
+                print("abajo!")
+                place.brick.remove(b)
+            elif (len(i) == 3) and (Rect(b).colliderect(i[2][1])):
+                print("abajo!")
+                place.brick.remove(b)
+
+    for i in bombs:
+        if (len(i) == 3) and (n - i[1] == 2.8*FPS):
             # player.bomb_explode(i, n, FPS)
             bombs.remove(i)
-        elif n - i[1] == 5*FPS:# probar dejando esta opción y eliminando la otra
-            player.bomb_explode(i, n, FPS)
-        elif (len(i) > 2) and (n - i[1] > 5*FPS):
+        elif (len(i) == 2) and (n - i[1] == 2.5*FPS):# probar dejando esta opción y eliminando la otra
             player.bomb_explode(i, n, FPS)
 
     drawing(DISPLAYSURF, place, player, place, bombs)
