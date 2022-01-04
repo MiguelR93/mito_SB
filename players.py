@@ -42,7 +42,7 @@ class Player():
         self.movement_direction = None
         self.rect = Rect(self.position[0], self.position[1], 64, 64)
         self.speed = 10
-        self.bomb_power = 1
+        self.bomb_power = 3
     
     def place_bomb(self):
         if self.movement_frames == 0:
@@ -59,22 +59,9 @@ class Player():
         expansion = 64
         if len(bomb) == 2:#1
             bomb.append([
-                # ((bomb[0][0]-32),(bomb[0][1]-32)-(self.bomb_power*expansion)),
-                # ((bomb[0][0]+32),(bomb[0][1]-32)-(self.bomb_power*expansion)),
-                # ((bomb[0][0]+32),(bomb[0][1]-32)),
-                # ((bomb[0][0]+32)+(self.bomb_power*expansion),(bomb[0][1]-32)),
-                # ((bomb[0][0]+32)+(self.bomb_power*expansion),(bomb[0][1]+32)),
-                # ((bomb[0][0]+32),(bomb[0][1]+32)),
-                # ((bomb[0][0]+32),(bomb[0][1]+32)+(self.bomb_power*expansion)),
-                # ((bomb[0][0]-32),(bomb[0][1]+32)+(self.bomb_power*expansion)),
-                # ((bomb[0][0]-32),(bomb[0][1]+32)),
-                # ((bomb[0][0]-32)-(self.bomb_power*expansion),(bomb[0][1]+32)),
-                # ((bomb[0][0]-32)-(self.bomb_power*expansion),(bomb[0][1]-32)),
-                # ((bomb[0][0]-32),(bomb[0][1]-32))
-
-                [(bomb[0][0]-(self.bomb_power*expansion+32)),(bomb[0][1]-32), 64*(self.bomb_power+2), 64],#x1
+                [(bomb[0][0]-(self.bomb_power*expansion+32)),(bomb[0][1]-32), 64*(self.bomb_power*2+1), 64],#x1
                 # [(bomb[0][0]+(self.bomb_power*expansion+32)),(bomb[0][1])]),#x2
-                [(bomb[0][0]-32),(bomb[0][1]-(self.bomb_power*expansion+32)), 64, 64*(self.bomb_power+2)],#y1
+                [(bomb[0][0]-32),(bomb[0][1]-(self.bomb_power*expansion+32)), 64, 64*(self.bomb_power*2+1)],#y1
                 # [(bomb[0][0]),(bomb[0][1]+(self.bomb_power*expansion+32))]),#y2
                 ])
     
