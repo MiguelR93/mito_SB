@@ -66,7 +66,7 @@ while gameLoop:
                 monsters.remove(b)
             elif (len(i) == 3) and (Rect(b).colliderect(i[2][1])):
                 print("abajo!")
-                monsters.remove(b)
+                monsters.remove(b)  
 
     for i in bombs:
         if (len(i) == 3) and (n - i[1] == 2.8*FPS):
@@ -74,6 +74,10 @@ while gameLoop:
             bombs.remove(i)
         elif (len(i) == 2) and (n - i[1] == 2.5*FPS):# probar dejando esta opción y eliminando la otra
             player.bomb_explode(i, n, FPS)
+
+    # monsters movement
+    for i in monsters:
+        i.action(random.randint(0,3), (place.wall + place.brick))
 
     drawing(DISPLAYSURF, place, player, place, bombs, monsters)
     pygame.display.update()

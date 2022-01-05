@@ -26,20 +26,72 @@ class Monster1():
         self.speed = 10
         self.bomb_power = 3
 
-    def initial_position(self, bricks):
-        # escoge aleatoriamente un coordenada y la agrega solamente si no está incluida en la lista de ladrillos
-        pass
-
     def act_rect(self):
         self.rect[0] = self.position[0]
         self.rect[1] = self.position[1]
     
     def action(self, event, walls):
         if self.movement_frames == 0:
-            if event.type == pygame.KEYDOWN:
-                self.movement(event, walls)
+            # if event.type == pygame.KEYDOWN:
+            #     self.movement(event, walls)
+            self.movement(event, walls)
         else:
             self.movement_animation(walls)
+
+    def movement(self, event, walls):
+        # if event.key == pygame.K_LEFT:
+        if event == 0:
+            if self.currently_sprite != self.left:
+                self.currently_sprite = self.left
+            elif self.position[0] == 64:
+                pass
+            elif self.collide(walls, 'left') == True:
+                pass
+            else: #aquí debería acceder a una animación
+                # self.position[0] -= 64
+                self.movement_direction = 'left'
+                self.movement_animation(walls)
+        # if (event.key == pygame.K_RIGHT):
+        if event == 1:
+            if self.currently_sprite != self.right:
+                self.currently_sprite = self.right
+                print("\n\n\nEran diferentes")
+            # self.position[0] += 64
+            elif self.position[0] == 64*13:
+                pass
+            elif self.collide(walls, 'right') == True:
+                pass
+            else: #aquí debería acceder a una animación
+                # self.position[0] += 64
+                self.movement_direction = 'right'
+                self.movement_animation(walls)
+        # if event.key == pygame.K_DOWN:
+        if event == 2:
+            # self.position[0] -= 64
+            if self.currently_sprite != self.front:
+                self.currently_sprite = self.front
+            elif self.position[1] == 64*10+32:
+                pass
+            elif self.collide(walls, 'down') == True:
+                pass
+            else: #aquí debería acceder a una animación
+                # self.position[1] += 64
+                self.movement_direction = 'down'
+                self.movement_animation(walls)
+        # if event.key == pygame.K_UP:
+        if event == 3:
+            if self.currently_sprite != self.back:
+                self.currently_sprite = self.back
+                print("\n\n\nEran diferentes")
+            # self.position[0] += 64
+            elif self.position[1] == 32:
+                pass
+            elif self.collide(walls, 'up') == True:
+                pass
+            else: #aquí debería acceder a una animación
+                # self.position[1] -= 64
+                self.movement_direction = 'up'
+                self.movement_animation(walls)
     
     def movement_animation(self, walls):
         self.movement_frames += 1
@@ -89,54 +141,3 @@ class Monster1():
         # self.position[0] -= 64
         self.position[values[0]] += 64*values[2]
         self.act_rect()
-
-    def movement(self, event, walls):
-        if event.key == pygame.K_LEFT:
-            if self.currently_sprite != self.left:
-                self.currently_sprite = self.left
-            elif self.position[0] == 64:
-                pass
-            elif self.collide(walls, 'left') == True:
-                pass
-            else: #aquí debería acceder a una animación
-                # self.position[0] -= 64
-                self.movement_direction = 'left'
-                self.movement_animation(walls)
-        if (event.key == pygame.K_RIGHT):
-            if self.currently_sprite != self.right:
-                self.currently_sprite = self.right
-                print("\n\n\nEran diferentes")
-            # self.position[0] += 64
-            elif self.position[0] == 64*13:
-                pass
-            elif self.collide(walls, 'right') == True:
-                pass
-            else: #aquí debería acceder a una animación
-                # self.position[0] += 64
-                self.movement_direction = 'right'
-                self.movement_animation(walls)
-        if event.key == pygame.K_DOWN:
-            # self.position[0] -= 64
-            if self.currently_sprite != self.front:
-                self.currently_sprite = self.front
-            elif self.position[1] == 64*10+32:
-                pass
-            elif self.collide(walls, 'down') == True:
-                pass
-            else: #aquí debería acceder a una animación
-                # self.position[1] += 64
-                self.movement_direction = 'down'
-                self.movement_animation(walls)
-        if event.key == pygame.K_UP:
-            if self.currently_sprite != self.back:
-                self.currently_sprite = self.back
-                print("\n\n\nEran diferentes")
-            # self.position[0] += 64
-            elif self.position[1] == 32:
-                pass
-            elif self.collide(walls, 'up') == True:
-                pass
-            else: #aquí debería acceder a una animación
-                # self.position[1] -= 64
-                self.movement_direction = 'up'
-                self.movement_animation(walls)
