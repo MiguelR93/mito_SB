@@ -3,7 +3,7 @@ from pygame.locals import *
 # from fields import *
 # from main import *
 
-def drawing(DISPLAYSURF, place, player, walls, bombs):
+def drawing(DISPLAYSURF, place, player, walls, bombs, monsters):
     DISPLAYSURF.fill((225,255,255))
     pygame.draw.rect(DISPLAYSURF, (0,255,0), place.ground)
     # for i in walls:
@@ -21,4 +21,6 @@ def drawing(DISPLAYSURF, place, player, walls, bombs):
         print('bombini')
     for i in place.brick:
         pygame.draw.rect(DISPLAYSURF, (25,25,25), (i))
-    pygame.draw.rect(DISPLAYSURF, player.currently_sprite, (player.position[0], player.position[1], 64,64))
+    for i in monsters:
+        pygame.draw.rect(DISPLAYSURF, i.currently_sprite, (i.rect))
+    pygame.draw.rect(DISPLAYSURF, player.currently_sprite, (player.rect))#.position[0], player.position[1], 64,64))

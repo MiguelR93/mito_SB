@@ -1,59 +1,35 @@
 import pygame, sys
 from pygame.locals import *
-# from fields import *
-# from drawing import *
-# from players import *
 
-# pygame.init()
-class Player():
-    def __init__(self):
+class Monster1():
+    def __init__(self, coordinate):
         # sprites:------
-        self.front = (255,255,255)
-        self.front_right = (158,0,45) 
-        self.front_left = (0,81,45) 
-        self.back = (185,185,0)
+        self.front = (111,111,111)
+        self.front_right = (118,1,31) 
+        self.front_left = (1,81,31) 
+        self.back = (181,181,1)
         # steps:
-        self.back_right = (18,81,45)
-        self.back_left = (18,8,45)
-        self.right = (0,0,0)
-        self.right_right = (58,81,45)
-        self.right_left = (158,10,45)
-        self.left = (0,0,255)
-        self.left_right = (48,81,45)
-        self.left_left = (158,11,45)
+        self.back_right = (18,81,31)
+        self.back_left = (18,8,31)
+        self.right = (1,1,1)
+        self.right_right = (18,81,31)
+        self.right_left = (118,11,31)
+        self.left = (1,1,111)
+        self.left_right = (38,81,31)
+        self.left_left = (118,11,31)
         self.currently_sprite = self.front
         # position:
-        self.position = [64, 32]
+        self.position = [coordinate[0], coordinate[1]]
         self.movement_frames = 0
         self.movement_direction = None
         self.rect = Rect(self.position[0], self.position[1], 64, 64)
         self.speed = 10
         self.bomb_power = 3
-    
-    def place_bomb(self):
-        if self.movement_frames == 0:
-            bomb = [int(self.position[0]+32), int(self.position[1]+32)]
-            return bomb
-        else:
-            return None
-    
-    def bomb_explode(self, bomb, frames, FPS):
-        """
-        1. Indicar la explosión
-        2. Realizar la explosión
-        3. Retirar la bomba"""
-        expansion = 64
-        if len(bomb) == 2:#1
-            bomb.append([
-                [(bomb[0][0]-(self.bomb_power*expansion+32)),(bomb[0][1]-32), 64*(self.bomb_power*2+1), 64],#x1
-                # [(bomb[0][0]+(self.bomb_power*expansion+32)),(bomb[0][1])]),#x2
-                [(bomb[0][0]-32),(bomb[0][1]-(self.bomb_power*expansion+32)), 64, 64*(self.bomb_power*2+1)],#y1
-                # [(bomb[0][0]),(bomb[0][1]+(self.bomb_power*expansion+32))]),#y2
-                ])
-    
-    # def bomb_explode_animation(self, bomb):
-    #     pass
-    
+
+    def initial_position(self, bricks):
+        # escoge aleatoriamente un coordenada y la agrega solamente si no está incluida en la lista de ladrillos
+        pass
+
     def act_rect(self):
         self.rect[0] = self.position[0]
         self.rect[1] = self.position[1]
