@@ -2,6 +2,7 @@ import pygame, sys
 from pygame.locals import *
 from fields import *
 from drawing import *
+from monsters import *
 from players import *
 from constants import *
 
@@ -14,9 +15,15 @@ clock = pygame.time.Clock()
 gameLoop = True
 place = Field()
 player = Player()
-n = 0
+n = 0 # cuenta frames, EXTREMADAMENTE NECESARIO
 bombs = []
-# walls = place.walls()
+monsters = []
+
+for a,i in enumerate(place.monsters):
+    b = Monster1(i)
+    # i.initial_position(place.brick)
+    monsters.append(b)
+walls = place.walls()
 
 # for i in place.all_walls_x:
 #     for e in place.all_walls_y:
@@ -44,10 +51,34 @@ while gameLoop:
 
     player.action(event, (place.wall + place.brick))
 
+    # detect explotion with bricks:
     for i in bombs:
-        if n - i[1] >= 5*FPS:
-            bombs.remove(i)
+        for b in place.brick:
+            if (len(i) == 3) and (Rect(b).colliderect(i[2][0])):
+                print("abajo!")
+                place.brick.remove(b)
+            elif (len(i) == 3) and (Rect(b).colliderect(i[2][1])):
+                print("abajo!")
+                place.brick.remove(b)
+        for b in monsters:
+            if (len(i) == 3) and (Rect(b).colliderect(i[2][0])):
+                print("abajo!")
+                monsters.remove(b)
+            elif (len(i) == 3) and (Rect(b).colliderect(i[2][1])):
+                print("abajo!")
+                monsters.remove(b)  
 
-    drawing(DISPLAYSURF, place, player, place, bombs)
+    for i in bombs:
+        if (len(i) == 3) and (n - i[1] == 2.8*FPS):
+            # player.bomb_explode(i, n, FPS)
+            bombs.remove(i)
+        elif (len(i) == 2) and (n - i[1] == 2.5*FPS):# probar dejando esta opción y eliminando la otra
+            player.bomb_explode(i, n, FPS)
+
+    # monsters movement
+    for i in monsters:
+        i.action(random.randint(0,3), (place.wall + place.brick))
+
+    drawing(DISPLAYSURF, place, player, place, bombs, monsters)
     pygame.display.update()
     clock.tick(FPS)

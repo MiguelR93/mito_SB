@@ -6,27 +6,13 @@ from pygame.locals import *
 
 # pygame.init()
 class Player():
-    # # def __init__(self, currently_sprite, front, front_right, front_left, back, back_right, back_left, right, right_right, right_left, left, left_right, left_left, pos_x, pos_y):
-    #     # sprites:------
-    #     self.currently_sprite = currently_sprite
-    #     self.front = front
-    #     self.front_right = front_right 
-    #     self.front_left = front_left 
-    #     self.back = back
-    #     self.back_right = back_right
-    #     self.back_left = back_left
-    #     self.right = right
-    #     self.right_right = right_right
-    #     self.right_left = right_left
-    #     self.left = left
-    #     self.left_right = left_right
-    #     self.left_left = left_left
     def __init__(self):
         # sprites:------
         self.front = (255,255,255)
         self.front_right = (158,0,45) 
         self.front_left = (0,81,45) 
         self.back = (185,185,0)
+        # steps:
         self.back_right = (18,81,45)
         self.back_left = (18,8,45)
         self.right = (0,0,0)
@@ -42,6 +28,7 @@ class Player():
         self.movement_direction = None
         self.rect = Rect(self.position[0], self.position[1], 64, 64)
         self.speed = 10
+        self.bomb_power = 3
     
     def place_bomb(self):
         if self.movement_frames == 0:
@@ -49,6 +36,23 @@ class Player():
             return bomb
         else:
             return None
+    
+    def bomb_explode(self, bomb, frames, FPS):
+        """
+        1. Indicar la explosión
+        2. Realizar la explosión
+        3. Retirar la bomba"""
+        expansion = 64
+        if len(bomb) == 2:#1
+            bomb.append([
+                [(bomb[0][0]-(self.bomb_power*expansion+32)),(bomb[0][1]-32), 64*(self.bomb_power*2+1), 64],#x1
+                # [(bomb[0][0]+(self.bomb_power*expansion+32)),(bomb[0][1])]),#x2
+                [(bomb[0][0]-32),(bomb[0][1]-(self.bomb_power*expansion+32)), 64, 64*(self.bomb_power*2+1)],#y1
+                # [(bomb[0][0]),(bomb[0][1]+(self.bomb_power*expansion+32))]),#y2
+                ])
+    
+    # def bomb_explode_animation(self, bomb):
+    #     pass
     
     def act_rect(self):
         self.rect[0] = self.position[0]

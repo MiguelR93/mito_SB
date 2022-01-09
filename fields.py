@@ -12,7 +12,8 @@ class Field():
         self.all_walls_x = [2*i*64 for i in range(1,7)]
         self.all_walls_y = [32+(i*2-1)*64 for i in range(1,6)]
         self.wall = self.walls()
-        self.brick = self.bricks()
+        self.brick = self.bricks('bricks')
+        self.monsters = self.bricks('monsters')
     
     def walls(self):
         walls = []
@@ -22,12 +23,18 @@ class Field():
         
         return walls
     
-    def bricks(self):
+    def bricks(self, thing):
         """
         1. Create posible position (x and y)
         2. Chose a specific number of them
         3. Place bricks
         """
+        q = None
+        if thing == 'bricks':
+            q = 20
+        elif thing == 'monsters':
+            q = 5
+        
         bricks = []
         x = [(i*2+1)*64 for i in range(1,6)] # 3-11
         y = [(i)*64+32 for i in range(11)] # 1-11
@@ -56,8 +63,11 @@ class Field():
 
         
         bricks = list(set(bricks))
+        if thing == 'monsters':
+            for i in self.brick:
+                bricks.remove(i)
         final_bricks = []
-        while len(final_bricks) < qbrick:
+        while len(final_bricks) < q:
             final_bricks.append(random.choice(bricks))
             final_bricks = list(set(final_bricks))
         return final_bricks
